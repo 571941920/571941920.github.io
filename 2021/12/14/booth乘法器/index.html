@@ -29,7 +29,7 @@
 <meta property="og:description" content="Booth算法乘法器">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-14T13:35:23.000Z">
-<meta property="article:modified_time" content="2021-12-14T13:57:40.980Z">
+<meta property="article:modified_time" content="2021-12-16T03:18:09.507Z">
 <meta property="article:author" content="LZY">
 <meta property="article:tag" content="Booth乘法器">
 <meta name="twitter:card" content="summary">
@@ -229,10 +229,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-12-14 21:35:23 / 修改时间：21:57:40" itemprop="dateCreated datePublished" datetime="2021-12-14T21:35:23+08:00">2021-12-14</time>
+              <time title="创建时间：2021-12-14 21:35:23" itemprop="dateCreated datePublished" datetime="2021-12-14T21:35:23+08:00">2021-12-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-16 11:18:09" itemprop="dateModified" datetime="2021-12-16T11:18:09+08:00">2021-12-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -265,10 +271,56 @@
         <p>Booth算法乘法器</p>
 <span id="more"></span>
 <h1 id="乘法器分类">乘法器分类</h1>
-<h2 id="传统乘法器及其改进">传统乘法器（及其改进）</h2>
+<h2 id="传统乘法器">传统乘法器</h2>
 <p>  传统乘法器的实现很简单，<strong>第一步</strong>就是去被乘数和乘数的正负关系然后去被乘数和乘数的正值；第二步：乘法本就是累加，乘多少就是累加多少次，所以第二步是累加操作，每加一次被乘数，递减一次乘数，直到乘数为0，表示操作结束；<strong>第三步</strong>：输出结果根据正负关系取得。</p>
-<p>  乘法不是只对正数操作的，因此当乘法中有负数存在的时候我们可以先将乘积的符号结果记录下来，然后将含有负数的乘法转换成只有正数的乘法。FPGA中，整数都是由补码形式存储的（正数最高为为0，负数在高位为1），因此对符号的判断可以通过最高位的<strong>异或</strong>完成。</p>
+<p>  乘法不是只对正数操作的，因此当乘法中有负数存在的时候我们可以先将乘积的符号结果记录下来，然后将含有负数的乘法转换成只有正数的乘法。FPGA中，整数都是由补码形式存储的（正数最高为为0，负数在高位为1），因此对符号的判断可以通过最高位的异或完成。</p>
 <p>  为了使用更少的时钟计算出结果，既可以理解成 3 个 4 相加，也可以理解成 4 个 3 相加，但是 3 个 4 相加只用 3 个时钟周期，4 个 3 相加就需要 4 个时钟周期了，所以明显可以看出使用更小的数作为加法的轮数更省时。</p>
+<h2 id="lut-乘法器">LUT 乘法器</h2>
+<p> 查找表乘法器就是将乘法结果存储在一个表中，当需要完成乘法的时候直接从查找表中查找出乘积结果就可以了。</p>
+<h1 id="booth乘法器">booth乘法器</h1>
+<h2 id="booth乘法大致流程">booth乘法大致流程</h2>
+<ol type="1">
+<li><p>被乘数A，乘数B</p></li>
+<li><p>将乘数B的末位加1位，即在B[-1]添加1位加码。</p>
+<table>
+<thead>
+<tr class="header">
+<th>……</th>
+<th>B[0]</th>
+<th>B[-1]</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>……</td>
+<td>0</td>
+<td>0</td>
+<td>无操作 右移1位</td>
+</tr>
+<tr class="even">
+<td>......</td>
+<td>0</td>
+<td>1</td>
+<td>+被乘数A 右移1位</td>
+</tr>
+<tr class="odd">
+<td>......</td>
+<td>1</td>
+<td>0</td>
+<td>-被乘数A 右移1位</td>
+</tr>
+<tr class="even">
+<td>......</td>
+<td>1</td>
+<td>1</td>
+<td>无操作 右移1位</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>P空间 在位操作时，会使用<span class="math inline">\(P\)</span>空间，容量为<span class="math inline">\(2n+1\)</span>，<span class="math inline">\(n\)</span>为乘数和被乘数的位数(根据不同情况<span class="math inline">\(n\)</span>值不同)。</p>
+<h2 id></h2></li>
+</ol>
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
     </div>
 
@@ -349,7 +401,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%98%E6%B3%95%E5%99%A8%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">乘法器分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E4%B9%98%E6%B3%95%E5%99%A8%E5%8F%8A%E5%85%B6%E6%94%B9%E8%BF%9B"><span class="nav-number">1.1.</span> <span class="nav-text">传统乘法器（及其改进）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%98%E6%B3%95%E5%99%A8%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">乘法器分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E4%B9%98%E6%B3%95%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">传统乘法器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lut-%E4%B9%98%E6%B3%95%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">LUT 乘法器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#booth%E4%B9%98%E6%B3%95%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">booth乘法器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#booth%E4%B9%98%E6%B3%95%E5%A4%A7%E8%87%B4%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">booth乘法大致流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
