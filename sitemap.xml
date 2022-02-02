@@ -65,14 +65,14 @@
 
   
   <url>
-    <loc>http://571941920.github.io/tags/DFT-FFT/</loc>
+    <loc>http://571941920.github.io/tags/Booth%E4%B9%98%E6%B3%95%E5%99%A8/</loc>
     <lastmod>2022-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://571941920.github.io/tags/Booth%E4%B9%98%E6%B3%95%E5%99%A8/</loc>
+    <loc>http://571941920.github.io/tags/DFT-FFT/</loc>
     <lastmod>2022-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -102,14 +102,14 @@
   </url>
   
   <url>
-    <loc>http://571941920.github.io/categories/FPGA/Verilog/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/</loc>
+    <loc>http://571941920.github.io/categories/FPGA/Verilog/Booth%E4%B9%98%E6%B3%95%E5%99%A8/</loc>
     <lastmod>2022-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://571941920.github.io/categories/FPGA/Verilog/Booth%E4%B9%98%E6%B3%95%E5%99%A8/</loc>
+    <loc>http://571941920.github.io/categories/FPGA/Verilog/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2/</loc>
     <lastmod>2022-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
